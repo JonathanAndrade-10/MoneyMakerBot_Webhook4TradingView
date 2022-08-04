@@ -1,0 +1,1 @@
+A copy of config.env file must be located in C:\Users\Administrator\
