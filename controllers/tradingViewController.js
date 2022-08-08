@@ -52,22 +52,20 @@ exports.createQueueItem = (req, res) => {
   axios.post(urlGetToken, bodyGetToken, configGetToken)
     .then( response => {
       var orchToken = response.data.access_token;
-      configAddQueueItem.headers.Authorization =  configAddQueueItem.headers.Authorization.replace('%ORCH_TOKEN%', orchToken); 
+      configAddQueueItem.headers.Authorization = `Bearer ${orchToken}`;
 
       axios.post(urlAddQueueItem, bodyAddQueueItem, configAddQueueItem)
-        .then( response => {
-          console.log('Queue item created')
+        .then( () => {
+          console.log('Queue item created');
 
           res.status(200).json({
             status: 'success',
             message: 'The new queue item was created succesfully'
           });
-
         })
         .catch( err => {
           console.log(err);
-        })
-
+        });
     })
     .catch( err => {
       console.log(err.message);
@@ -76,5 +74,5 @@ exports.createQueueItem = (req, res) => {
         status: 'fail',
         message: err.message
       });
-    })
+    });
 };
